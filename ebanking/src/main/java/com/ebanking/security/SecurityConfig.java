@@ -23,7 +23,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import java.util.ArrayList;
 import java.util.Collection;
-import javax.servlet.Filter;
 
 @Configuration 
 @AllArgsConstructor
@@ -46,12 +45,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Override
-    protected void configure(HttpSecurity http) throws Exception {        
-        http.authorizeRequests().anyRequest().authenticated();        
-        http.csrf().disable();
-        http.formLogin().disable();
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests().anyRequest().authenticated();http.csrf().disable();http.formLogin().disable();
         http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
-        http.addFilter((Filter) new JwtAuthenticationFilter(authenticationManagerBean()));
+        http.addFilter(new JwtAuthenticationFilter(authenticationManagerBean()));
         http.addFilterBefore(new JwtAuthorizationFilter(), UsernamePasswordAuthenticationFilter.class);
     }
     @Bean
