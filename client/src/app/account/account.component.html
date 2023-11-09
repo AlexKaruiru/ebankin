@@ -1,0 +1,47 @@
+<div class="container mt-3" >
+  <h6 class="text-success">Select the customer : </h6>
+  <form class="input-group" [formGroup]="searchFormGroup" (ngSubmit)="doSearchAccount()">
+    <label class="input-group-text">Identifier :</label>
+    <input type="text" class="form-control" formControlName="customerId">
+    <button class="btn btn-info">
+      <i class="bi bi-search"></i>
+    </button>
+  </form>
+  <div class="card" *ngIf="accountList">
+    <div class="card-header"> List of customers</div>
+    <div class="card-body">
+      <table class="table">
+        <thead>
+        <tr>
+          <th>Id</th>
+          <th>Balance</th>
+          <th>Creation date</th>
+          <th>Status</th>
+          <th>Delete</th>
+          <th>Operations</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr *ngFor="let account of accountList | async">
+          <td>{{account.id}}</td>
+          <td>{{account.balance}}</td>
+          <td>{{account.createdAt}}</td>
+          <td>{{account.status}}</td>
+          <td>
+            <button class="btn btn-danger" (click)="doDeleteAccount(account.id)">
+              <i class="bi bi-trash3"></i>
+            </button>
+          </td>
+          <td>
+            <button class="btn btn-info" data-bs-dismiss="modal" aria-label="Close"
+                    (click)="goToOperations(account.id)">
+              <i class="bi bi-journal-text"></i>
+            </button>
+          </td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
